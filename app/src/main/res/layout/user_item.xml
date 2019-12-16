@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="20dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/null_avata" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:textSize="17dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/userImage"
+        android:text="UserName"
+        android:textColor="#fd6003" />
+
+    <TextView
+        android:id="@+id/lastMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userName"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/userImage"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#000"
+        android:textSize="11dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/online"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginTop="33dp"
+        android:layout_toRightOf="@id/userImage"
+        android:src="#0BD51E"
+        android:visibility="gone" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/offline"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginTop="33dp"
+        android:layout_toRightOf="@id/userImage"
+        android:src="#D9DBD9"
+        android:visibility="gone" />
+</RelativeLayout>

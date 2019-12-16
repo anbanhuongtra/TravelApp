@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "19314210695",
+    "firebase_url": "https://datatravelapp-18fca.firebaseio.com",
+    "project_id": "datatravelapp-18fca",
+    "storage_bucket": "datatravelapp-18fca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19314210695:android:d66c011f1807ed37fa0522",
+        "android_client_info": {
+          "package_name": "com.example.traveltogether"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19314210695-g9huu0qegqf8t1aurafer2m4bqmh1sep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8MHdn1-OnZ08aGhjWErLrnewFRe9qAJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19314210695-g9huu0qegqf8t1aurafer2m4bqmh1sep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

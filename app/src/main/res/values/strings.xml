@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Travel Together</string>
+    <string name="txtDangNhap">Đăng nhập</string>
+    <string name="btnDangNhap">Đăng nhập</string>
+    <string name="txtHintHoTen">Họ Tên</string>
+    <string name="txtHintEmail">Email</string>
+    <string name="txtHintMatKhau">Mật khẩu</string>
+    <string name="txtHintXacNhan">Xác nhận mật khẩu</string>
+    <string name="txtQuenMK">Quên mật khẩu?</string>
+    <string name="txtDoiMK">Đổi mật khẩu</string>
+    <string name="btnDangKy"><u>ĐĂNG KÝ</u></string>
+    <string name="KoTaiKhoan">Bạn chưa có tài khoản?</string>
+    <string name="txtDangKy">Đăng ký</string>
+    <string name="btnDangKy2">Đăng ký</string>
+    <string name="txtNote1">Bạn chưa điền Họ Tên</string>
+    <string name="txtNote2">Bạn chưa điền Email</string>
+    <string name="txtNote3">Bạn chưa tạo mật khẩu</string>
+    <string name="txtNote4">Bạn chưa xác nhận mật khẩu</string>
+    <string name="btnGuiLink">Gửi link cho tôi</string>
+    <string name="txtNhapMail">Hãy nhập email bạn đã dùng để tạo tài khoản ICU</string>
+    <string name="txtKiemTraMail">Hãy kiểm tra email để thiết lập lại mật khẩu của bạn</string>
+    <string name="checkBoxThich">Thích</string>
+    <string name="txtLuotXem">Lượt xem</string>
+    <string name="txtXemPhim">Xem phim</string>
+    <string name="txtTrailer">Xem Trailer</string>
+    <string name="btnXemThem"><u>Xem thêm</u></string>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+   >
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="Home"
+            android:icon="@drawable/home"
+            />
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/user"
+            android:title="Profile" />
+        <item
+            android:id="@+id/favourite"
+            android:icon="@drawable/heart"
+            android:title="Favourite" />
+        <item
+            android:id="@+id/chat"
+            android:icon="@drawable/chat"
+            android:title="Chat" />
+
+    </group>
+
+    <item android:title="Extension">
+        <menu>
+            <item
+                android:id="@+id/about"
+                android:title="About" />
+            <item
+                android:id="@+id/contact"
+                android:title="Contact" />
+            <item
+                android:id="@+id/feedback"
+                android:title="FeedBack"
+                />
+
+        </menu>
+
+    </item>
+</menu>
