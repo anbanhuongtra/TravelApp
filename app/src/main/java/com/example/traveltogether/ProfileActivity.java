@@ -186,9 +186,9 @@ public class ProfileActivity extends AppCompatActivity {
                             storageRef.child(user.getUid() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    // Got the download URL for 'users/me/profile.png'
+                                    // Got the download URL
 
-                                    //update infor fbuser
+                                    //update image for fbUser
                                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                             .setPhotoUri(uri)
                                             .build();
@@ -201,6 +201,10 @@ public class ProfileActivity extends AppCompatActivity {
                                                     }
                                                 }
                                             });
+
+                                    //update image for Firebase data
+                                    mData.child("User").child(user.getUid()).child("src").setValue(uri.toString());
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -385,9 +389,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void status(String status)
     {
         mData.child("User").child(user.getUid()).child("status").setValue(status);
-//        HashMap<String,Object> hashMap = new HashMap<>();
-//        hashMap.put("status",status);
-//        mData.child("User").child(user.getUid()).updateChildren(hashMap);
+//
     }
 
     @Override

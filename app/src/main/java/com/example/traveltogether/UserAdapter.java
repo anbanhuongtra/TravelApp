@@ -63,14 +63,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("userid", user.getUID());
+                intent.putExtra("userid", user.getUid());
                 context.startActivity(intent);
             }
         });
 
         if(isChat)
         {
-            lastMessage(user.getUID(),holder.lastMsg);
+            lastMessage(user.getUid(),holder.lastMsg);
         }
         else
             holder.lastMsg.setVisibility(View.GONE);

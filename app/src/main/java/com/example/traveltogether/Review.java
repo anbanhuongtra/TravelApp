@@ -1,6 +1,8 @@
 package com.example.traveltogether;
 
-public class Review {
+import java.io.Serializable;
+
+public class Review implements Serializable {
     String id;
     String name;
     String content;
@@ -9,11 +11,14 @@ public class Review {
     String time;
     String author;
     String img;
+    long like;
+    long view;
+
 
     public Review() {
     }
 
-    public Review(String id, String name, String content, String title, String address, String time, String author, String img) {
+    public Review(String id, String name, String content, String title, String address, String time, String author, String img,long like, long view) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -22,6 +27,23 @@ public class Review {
         this.time = time;
         this.author = author;
         this.img = img;
+        this.like = like;
+    }
+
+    public long getView() {
+        return view;
+    }
+
+    public void setView(long view) {
+        this.view = view;
+    }
+
+    public long getLike() {
+        return like;
+    }
+
+    public void setLike(long like) {
+        this.like = like;
     }
 
     public String getName() {

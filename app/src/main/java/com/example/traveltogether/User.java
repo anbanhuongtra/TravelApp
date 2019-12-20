@@ -27,20 +27,20 @@ public class User {
         this.status = status;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getSrc() {
         return src;
     }
 
     public void setSrc(String src) {
         this.src = src;
-    }
-
-    public String getUID() {
-        return uid;
-    }
-
-    public void setUID(String uid) {
-        this.uid = uid;
     }
 
     public String getEmail() {

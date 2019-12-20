@@ -85,7 +85,7 @@ public class UsersFragment extends Fragment {
                     User user = snapshot.getValue(User.class);
                     assert user != null;
                     assert firebaseUser != null;
-                    if (!user.getUID().equals(firebaseUser.getUid()) && user.getHoTen().toLowerCase().indexOf(s) != -1 )
+                    if (!user.getUid().equals(firebaseUser.getUid()) && user.getHoTen().toLowerCase().indexOf(s) != -1 )
                         userList.add(user);
                 }
                 userAdapter = new UserAdapter(getContext(),userList,false);
@@ -111,11 +111,11 @@ public class UsersFragment extends Fragment {
                     userList.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         User user = snapshot.getValue(User.class);
-                        user.setUID(snapshot.getKey());
+                        user.setUid(snapshot.getKey());
                         if (snapshot.child("src").getValue() != null)
                             user.setSrc((String) snapshot.child("src").getValue());
                         else user.setSrc("");
-                        if (!user.getUID().equals(firebaseUser.getUid()))
+                        if (!user.getUid().equals(firebaseUser.getUid()))
                             userList.add(user);
 
                     }

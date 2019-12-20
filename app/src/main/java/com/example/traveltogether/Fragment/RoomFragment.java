@@ -83,7 +83,7 @@ public class RoomFragment extends Fragment {
                     User user = snapshot.getValue(User.class);
                     for (Chatlist chatlist: userIDList)
                     {
-                        if(user.getUID().equals(chatlist.getId()))
+                        if(user.getUid().equals(chatlist.getId()))
                             userList.add(user);
                     }
 

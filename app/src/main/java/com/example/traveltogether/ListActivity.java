@@ -1,6 +1,7 @@
 package com.example.traveltogether;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,6 +20,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,20 +34,20 @@ import java.util.ArrayList;
 public class ListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     PlaceAdapter placeAdapter;
-    ArrayList<Place> placeArrayList;
     ArrayList<Review> reviewArrayList;
-    ListView listPlace;
+    ListView listReview;
     androidx.appcompat.widget.Toolbar toolbar;
     DrawerLayout mDrawerLayout;
     NavigationView navigationView;
     DatabaseReference dbReference;
+    FirebaseUser fbUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        listPlace = findViewById(R.id.listPlace);
+        listReview = findViewById(R.id.listReview);
 
         reviewArrayList = new ArrayList<>();
         toolbar = findViewById(R.id.toolbarBottom);
@@ -51,15 +55,11 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         dbReference = FirebaseDatabase.getInstance().getReference();
+        fbUser = FirebaseAuth.getInstance().getCurrentUser();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         Button btnOption = toolbar.findViewById(R.id.add);
-
-//        placeArrayList.add(new Place("Taj Mahal", "Agra", R.drawable.tajmahal));
-//        placeArrayList.add(new Place("Vạn lý trường thành", "Hoài Nhu - Bắc Kinh", R.drawable.vltt));
-//        placeArrayList.add(new Place("Tháp Eiffel", "Thành phố Paris", R.drawable.eiffel_tower));
-//        placeArrayList.add(new Place("Biển Kỳ Co", "Thành phố Quy Nhơn", R.drawable.kyco));
 
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
 
@@ -87,16 +87,17 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-//        listPlace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Place place = placeArrayList.get(i);
-//                Intent intent = new Intent(ListActivity.this, DetailActivity.class);
-//                intent.putExtra("data", place);
-//                startActivity(intent);
-//
-//            }
-//        });
+        listReview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Review review = reviewArrayList.get(i);
+                dbReference.child("Reviews").child(review.getId()).child("view").setValue(review.getView()+1);
+                Intent intent = new Intent(ListActivity.this, DetailActivity.class);
+                intent.putExtra("data", review);
+                startActivity(intent);
+
+            }
+        });
     }
 
     public void LoadReview() {
@@ -106,9 +107,12 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 reviewArrayList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Review review = snapshot.getValue(Review.class);
+                    if(snapshot.child("userLike").getChildrenCount() != 0)
+                        review.setLike(snapshot.child("userLike").getChildrenCount());
+                    else review.setLike(0);
                     reviewArrayList.add(review);
                     placeAdapter = new PlaceAdapter(getBaseContext(), R.layout.information_place, reviewArrayList);
-                    listPlace.setAdapter(placeAdapter);
+                    listReview.setAdapter(placeAdapter);
                 }
             }
 
@@ -118,13 +122,14 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+//
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,7 +142,6 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -154,5 +158,23 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    private void status(String status)
+    {
+        dbReference.child("User").child(fbUser.getUid()).child("status").setValue(status);
+//
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
     }
 }
