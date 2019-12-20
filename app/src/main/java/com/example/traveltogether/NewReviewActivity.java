@@ -62,7 +62,7 @@ public class NewReviewActivity extends AppCompatActivity {
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference();
         final Calendar calendar = Calendar.getInstance();
-        currentTime = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR);
+        currentTime = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.YEAR);
 
 
 
