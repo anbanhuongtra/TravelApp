@@ -19,11 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@android:color/transparent"
-            app:layout_constraintBottom_toTopOf="@id/toolbarBottom"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarBottom"
             app:layout_constraintTop_toTopOf="parent">
 
             <ListView
-                android:id="@+id/listReview"
+                android:id="@+id/listTrip"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent" />

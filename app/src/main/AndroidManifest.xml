@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListReviewActivity"></activity>
+        <activity android:name=".FavouriteActivity"></activity>
+        <activity android:name=".DetailTripActivity" />
+        <activity android:name=".TripActivity" />
+        <activity android:name=".CreateTripActivity" />
+        <activity android:name=".ListReviewActivity" />
         <activity android:name=".NewReviewActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".FoodActivity" />

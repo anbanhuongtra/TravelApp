@@ -67,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     void GetData() {
-        review = (Review) getIntent().getSerializableExtra("data");
+        review = (Review) getIntent().getSerializableExtra("dataReview");
 
         dbRef.child("Reviews").child(review.getId()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,7 +93,10 @@ public class DetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (review.getAuthor().equals(snapshot.getValue(User.class).getUid())) {
+                        if (!snapshot.getValue(User.class).getSrc().equals(""))
                         Glide.with(getBaseContext()).load(snapshot.getValue(User.class).getSrc()).into(imgUser);
+                        else
+                            imgUser.setImageResource(R.drawable.null_avata);
                         txtUserName.setText(snapshot.getValue(User.class).getHoTen());
                     }
 

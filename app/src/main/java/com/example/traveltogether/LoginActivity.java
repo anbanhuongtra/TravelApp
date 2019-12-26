@@ -111,6 +111,11 @@ public class LoginActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        
+    }
+
     private void AnhXa() {
         btnLogin = findViewById(R.id.btnLogin);
         btnReset= findViewById(R.id.btnReset);

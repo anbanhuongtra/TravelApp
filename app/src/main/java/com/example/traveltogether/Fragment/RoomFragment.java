@@ -90,6 +90,7 @@ public class RoomFragment extends Fragment {
                 }
                 userAdapter = new UserAdapter(getContext(),userList,true);
                 recyclerView.setAdapter(userAdapter);
+
             }
 
             @Override

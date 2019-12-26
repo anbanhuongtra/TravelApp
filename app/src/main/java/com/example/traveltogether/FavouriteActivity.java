@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,12 +33,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
-public class ListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class FavouriteActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    PlaceAdapter placeAdapter;
-    ArrayList<Review> reviewArrayList;
-    ListView listReview;
+    TripAdapter tripAdapter;
+    ArrayList<Trip> tripArrayList;
+    ListView listTrip;
     androidx.appcompat.widget.Toolbar toolbar;
     DrawerLayout mDrawerLayout;
     NavigationView navigationView;
@@ -49,11 +49,11 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_favourite);
 
-        listReview = findViewById(R.id.listReview);
+        listTrip = findViewById(R.id.listTrip);
 
-        reviewArrayList = new ArrayList<>();
+        tripArrayList = new ArrayList<>();
         toolbar = findViewById(R.id.toolbarBottom);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -68,15 +68,15 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         EditText edtSearch = toolbar.findViewById(R.id.edtSearch);
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
 
-        LoadReview();
+        LoadTrip();
 
 
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                reviewArrayList.clear();
-                LoadReview();
-                placeAdapter.notifyDataSetChanged();
+                tripArrayList.clear();
+                LoadTrip();
+                tripAdapter.notifyDataSetChanged();
                 pullToRefresh.setRefreshing(false);
             }
         });
@@ -85,7 +85,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListActivity.this, NewReviewActivity.class);
+                Intent intent = new Intent(FavouriteActivity.this, CreateTripActivity.class);
                 startActivity(intent);
 
             }
@@ -99,17 +99,17 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onTextChanged(final CharSequence charSequence, int i, int i1, int i2) {
-                reviewArrayList.clear();
-                dbReference.child("Reviews").addValueEventListener(new ValueEventListener() {
+                tripArrayList.clear();
+                dbReference.child("Trips").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Review review = snapshot.getValue(Review.class);
-                            if(review.getName().toLowerCase().indexOf(charSequence.toString().toLowerCase()) != -1)
-                                reviewArrayList.add(review);
+                            Trip trip = snapshot.getValue(Trip.class);
+                            if(snapshot.child("userLike").child(fbUser.getUid()).exists() && trip.getTitle().toLowerCase().indexOf(charSequence.toString().toLowerCase()) != -1)
+                                tripArrayList.add(trip);
                         }
-                        placeAdapter = new PlaceAdapter(getBaseContext(), R.layout.information_place, reviewArrayList);
-                        listReview.setAdapter(placeAdapter);
+                        tripAdapter = new TripAdapter(getBaseContext(), R.layout.trip_item, tripArrayList);
+                        listTrip.setAdapter(tripAdapter);
                     }
 
                     @Override
@@ -132,32 +132,29 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        listReview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listTrip.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Review review = reviewArrayList.get(i);
-                dbReference.child("Reviews").child(review.getId()).child("view").setValue(review.getView()+1);
-                Intent intent = new Intent(ListActivity.this, DetailActivity.class);
-                intent.putExtra("dataReview", review);
+                Trip trip = tripArrayList.get(i);
+                Intent intent = new Intent(FavouriteActivity.this, DetailTripActivity.class);
+                intent.putExtra("dataTrip", trip);
                 startActivity(intent);
 
             }
         });
     }
 
-    public void LoadReview() {
-        dbReference.child("Reviews").addValueEventListener(new ValueEventListener() {
+    public void LoadTrip() {
+        dbReference.child("Trips").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                reviewArrayList.clear();
+                tripArrayList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Review review = snapshot.getValue(Review.class);
-                    if(snapshot.child("userLike").getChildrenCount() != 0)
-                        review.setLike(snapshot.child("userLike").getChildrenCount());
-                    else review.setLike(0);
-                    reviewArrayList.add(review);
-                    placeAdapter = new PlaceAdapter(getBaseContext(), R.layout.information_place, reviewArrayList);
-                    listReview.setAdapter(placeAdapter);
+                    Trip trip = snapshot.getValue(Trip.class);
+                    if(snapshot.child("userLike").child(fbUser.getUid()).exists())
+                    tripArrayList.add(trip);
+                    tripAdapter = new TripAdapter(getBaseContext(), R.layout.trip_item, tripArrayList);
+                    listTrip.setAdapter(tripAdapter);
                 }
             }
 
@@ -193,23 +190,23 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.chat:
-                intent = new Intent(ListActivity.this, ChatActivity.class);
+                intent = new Intent(FavouriteActivity.this, ChatActivity.class);
                 startActivity(intent);
                 break;
             case R.id.profile:
-                intent = new Intent(ListActivity.this, ProfileActivity.class);
+                intent = new Intent(FavouriteActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.review:
+                intent = new Intent(FavouriteActivity.this, ListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.trip:
-                intent = new Intent(ListActivity.this, TripActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.favourite:
-                intent = new Intent(ListActivity.this, FavouriteActivity.class);
+                intent = new Intent(FavouriteActivity.this, TripActivity.class);
                 startActivity(intent);
                 break;
             case R.id.logOut:
-                intent = new Intent(ListActivity.this, LoginActivity.class);
+                intent = new Intent(FavouriteActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
         }

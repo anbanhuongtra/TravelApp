@@ -72,7 +72,7 @@ public class NewReviewActivity extends AppCompatActivity {
         if (fbUser.getPhotoUrl() != null)
             Glide.with(getBaseContext()).load(fbUser.getPhotoUrl()).into(imgUser);
 
-        txtTime.setText("Date: " + currentTime);
+        txtTime.setText( currentTime);
 
 
         btnAdd.setOnClickListener(new View.OnClickListener() {

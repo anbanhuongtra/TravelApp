@@ -5,9 +5,14 @@
    >
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
-            android:title="Home"
+            android:id="@+id/review"
+            android:title="Review"
             android:icon="@drawable/home"
+            />
+        <item
+            android:id="@+id/trip"
+            android:title="Trip"
+            android:icon="@drawable/trip"
             />
         <item
             android:id="@+id/profile"
@@ -21,6 +26,10 @@
             android:id="@+id/chat"
             android:icon="@drawable/chat"
             android:title="Chat" />
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/log_out"
+            android:title="Log out" />
 
     </group>
 
